@@ -64,8 +64,8 @@ class Art:
                                 else:
                                         g = self.string # 就选这个
                                 if use_cmd_color:
-                                        ctypes.windll.kernel32.SetConsoleTextAttribute(self.HANDLE,self.cmd_color)
-                                        print(g)
+                                        ctypes.windll.kernel32.SetConsoleTextAttribute(self.HANDLE,self.cmd_color) # 设置颜色
+                                        print(g, end=str(self.end)) # 输出
                                 elif self.stochastic_color:  # 如果是随机颜色
                                         w = random.choice([0,1]) # 随机选颜色
                                         if w == True: # 如果是红色
@@ -114,6 +114,10 @@ class Art:
                 self.data["Stochastic_color"] = self.stochastic_color
                 self.data["Raw_color"] = self.raw_color
                 self.data["Cmd_color"] = self.cmd_color
+        def show_cmd_color(self):
+                print("Color Unicode Is "+str(self.cmd_color)) # 输出数值
+                ctypes.windll.kernel32.SetConsoleTextAttribute(self.HANDLE,self.cmd_color) # 设置颜色
+                print("OK") # 输出测试
 def new_line(string="*",width=20, red=False, space=True):
     """
 换一行执行新的程序
