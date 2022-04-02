@@ -65,6 +65,7 @@ class Art:
                                         g = self.string # 就选这个
                                 if use_cmd_color:
                                         ctypes.windll.kernel32.SetConsoleTextAttribute(self.HANDLE,self.cmd_color)
+                                        print(g)
                                 elif self.stochastic_color:  # 如果是随机颜色
                                         w = random.choice([0,1]) # 随机选颜色
                                         if w == True: # 如果是红色
