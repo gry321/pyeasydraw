@@ -119,15 +119,21 @@ class Art:
                 self.data["Raw_color"] = self.raw_color
                 self.data["Cmd_color"] = self.cmd_color
         def show_cmd_color(self):
+                """
+测试输出颜色
+                """
                 print("Color Unicode Is "+str(self.cmd_color)) # 输出数值
                 ctypes.windll.kernel32.SetConsoleTextAttribute(self.HANDLE,self.cmd_color) # 设置颜色
                 print("OK") # 输出测试
                 if self.autoresetcmdcolor:
                         self.reset_cmd_color() # 重置
         def reset_cmd_color(self):
+                """
+重置颜色
+                """
                 ctypes.windll.kernel32.SetConsoleTextAttribute(self.HANDLE,7) # 先设置为白色
                 print(end="") # 输出（空格）
-def new_line(string="*",width=20, red=False, space=True):
+def new_line(string="*",width=20, red=False, space=True,cmd_color=7):
     """
 换一行执行新的程序
     """    
@@ -139,7 +145,8 @@ def new_line(string="*",width=20, red=False, space=True):
     a.string = string # 设置字
     a.width = width # 设置宽
     a.height = 1 # 设置高
-    a.run() # 运行
+    a.cmd_color = cmd_color # 设置cmd颜色
+    a.run(True) # 运行
 def main():
     r = Art(10,10)
     r.run()
