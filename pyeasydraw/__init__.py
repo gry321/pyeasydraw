@@ -28,7 +28,7 @@ import ctypes # 设置cmd颜色
 __version__ = "0.0.2"
 __all__ = ["Art","new_line"]
 class Art:
-        def __init__(self, height=10, width=10, string: (str, tuple) = "*", end: str = " ", stochastic=False, red=False, stochastic_color=False,raw_color=False,cmd_color=7):
+        def __init__(self, height=10, width=10, string: (str, tuple) = "*", end: str = " ", stochastic=False, red=False, stochastic_color=False,raw_color=False,cmd_color=7,autoresetcmdcolor=True):
                 self.HANDLE = ctypes.windll.kernel32.GetStdHandle(-11) #输出Handle
                 self.height = height # 高度
                 self.width = width # 宽度
@@ -39,6 +39,7 @@ class Art:
                 self.stochastic_color = stochastic_color # 是否随机颜色
                 self.raw_color = raw_color # 有规律的颜色
                 self.cmd_color = cmd_color # 控制台的颜色
+                self.autoresetcmdcolor = autoresetcmdcolor # 设置自动重置颜色
                 self.data = {
 			"Height": height, 
 			"Width": width,
@@ -48,7 +49,8 @@ class Art:
 			"Red": red,
                         "Stochastic_color": stochastic_color,
                         "Raw_color":raw_color,
-                        "Cmd_color":cmd_color
+                        "Cmd_color":cmd_color,
+                        "Autoresetcmdcolor":autoresetcmdcolor
                              } # 用来存放数据
 
         def run(self,use_cmd_color=False):
@@ -66,6 +68,7 @@ class Art:
                                 if use_cmd_color:
                                         ctypes.windll.kernel32.SetConsoleTextAttribute(self.HANDLE,self.cmd_color) # 设置颜色
                                         print(g, end=str(self.end)) # 输出
+                                        self.reset_cmd_color() # 重置颜色
                                 elif self.stochastic_color:  # 如果是随机颜色
                                         w = random.choice([0,1]) # 随机选颜色
                                         if w == True: # 如果是红色
@@ -118,6 +121,9 @@ class Art:
                 print("Color Unicode Is "+str(self.cmd_color)) # 输出数值
                 ctypes.windll.kernel32.SetConsoleTextAttribute(self.HANDLE,self.cmd_color) # 设置颜色
                 print("OK") # 输出测试
+        def reset_cmd_color(self):
+                ctypes.windll.kernel32.SetConsoleTextAttribute(self.HANDLE,7) # 先设置为白色
+                print(end="") # 输出（空格）
 def new_line(string="*",width=20, red=False, space=True):
     """
 换一行执行新的程序
