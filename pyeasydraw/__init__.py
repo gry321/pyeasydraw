@@ -68,7 +68,6 @@ class Art:
                                 if use_cmd_color:
                                         ctypes.windll.kernel32.SetConsoleTextAttribute(self.HANDLE,self.cmd_color) # 设置颜色
                                         print(g, end=str(self.end)) # 输出
-                                        self.reset_cmd_color() # 重置颜色
                                 elif self.stochastic_color:  # 如果是随机颜色
                                         w = random.choice([0,1]) # 随机选颜色
                                         if w == True: # 如果是红色
@@ -88,6 +87,8 @@ class Art:
                                         print(str(g), end=str(self.end))
 
                         print("") #换一行
+                if self.autoresetcmdcolor:
+                        self.reset_cmd_color() # 重置颜色
         def set_data(self):
                 """
 把参数设置为data中的参数
@@ -121,6 +122,8 @@ class Art:
                 print("Color Unicode Is "+str(self.cmd_color)) # 输出数值
                 ctypes.windll.kernel32.SetConsoleTextAttribute(self.HANDLE,self.cmd_color) # 设置颜色
                 print("OK") # 输出测试
+                if self.autoresetcmdcolor:
+                        self.reset_cmd_color() # 重置
         def reset_cmd_color(self):
                 ctypes.windll.kernel32.SetConsoleTextAttribute(self.HANDLE,7) # 先设置为白色
                 print(end="") # 输出（空格）
