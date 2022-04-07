@@ -24,11 +24,13 @@
 import random # 随机
 import sys # 用红色输出
 import ctypes # 设置cmd颜色
+import time
+
 
 __version__ = "0.0.2"
 __all__ = ["Art","new_line"]
 class Art:
-        def __init__(self, height=10, width=10, string: (str, tuple) = "*", end: str = " ", stochastic=False, red=False, stochastic_color=False,raw_color=False,cmd_color=7,autoresetcmdcolor=True):
+        def __init__(self, height=10, width=10, string: (str, tuple) = "*", end: str = " ", stochastic=False, red=False, stochastic_color=False,raw_color=False,cmd_color=7,autoresetcmdcolor=True,sleep=0):
                 self.HANDLE = ctypes.windll.kernel32.GetStdHandle(-11) #输出Handle
                 self.height = height # 高度
                 self.width = width # 宽度
@@ -39,6 +41,7 @@ class Art:
                 self.stochastic_color = stochastic_color # 是否随机颜色
                 self.raw_color = raw_color # 有规律的颜色
                 self.cmd_color = cmd_color # 控制台的颜色
+                self.sleep = sleep # 间隔时间
                 self.autoresetcmdcolor = autoresetcmdcolor # 设置自动重置颜色
                 self.data = {
 			"Height": height, 
@@ -50,8 +53,9 @@ class Art:
                         "Stochastic_color": stochastic_color,
                         "Raw_color":raw_color,
                         "Cmd_color":cmd_color,
-                        "Autoresetcmdcolor":autoresetcmdcolor
-                             } # 用来存放数据
+                        "Autoresetcmdcolor":autoresetcmdcolor,
+                        "Sleep":sleep
+                        } # 用来存放数据
 
         def run(self,use_cmd_color=True):
                 """
@@ -85,7 +89,7 @@ class Art:
                                 else:
                                         # 用print（蓝色）输出
                                         print(str(g), end=str(self.end))
-
+                                time.sleep(self.sleep) # 等待
                         print("") #换一行
                 if self.autoresetcmdcolor:
                         self.reset_cmd_color() # 重置颜色
@@ -103,6 +107,7 @@ class Art:
                 self.stochastic_color = self.data["Stochastic_color"]
                 self.raw_color = self.data["Raw_color"]
                 self.cmd_color = self.data["Cmd_color"]
+                self.sleep = self.data["Sleep"]
 
         def reset_data(self):
                 """
@@ -118,6 +123,7 @@ class Art:
                 self.data["Stochastic_color"] = self.stochastic_color
                 self.data["Raw_color"] = self.raw_color
                 self.data["Cmd_color"] = self.cmd_color
+                self.data["Sleep"] = self.sleep
         def show_cmd_color(self):
                 """
 测试输出颜色
