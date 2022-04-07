@@ -53,7 +53,7 @@ class Art:
                         "Autoresetcmdcolor":autoresetcmdcolor
                              } # 用来存放数据
 
-        def run(self,use_cmd_color=False):
+        def run(self,use_cmd_color=True):
                 """
 进行输出程序
                 """
