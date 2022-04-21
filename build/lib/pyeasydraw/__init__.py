@@ -24,7 +24,8 @@
 import random # 随机
 import sys # 用红色输出
 import ctypes # 设置cmd颜色
-import time
+import warnings # 警告
+import sys 
 
 
 __version__ = "0.0.2"
@@ -153,6 +154,16 @@ def new_line(string="*",width=20, red=False, space=True,cmd_color=7):
     a.height = 1 # 设置高
     a.cmd_color = cmd_color # 设置cmd颜色
     a.run(True) # 运行
+def this_is_cmd():
+    try:
+        sys.stdin.fileno()
+    except Exception:
+        return False
+    else:
+        return True
+def raise_warning_for_cmd():
+    if this_is_cmd() != True:
+        warnings.warn("This is a Not Cmd Environment Warnning")
 def main():
     r = Art(10,10)
     r.run()
